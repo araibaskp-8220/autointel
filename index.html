@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Watson Chat</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+    }
+
+    header {
+      background: #0f62fe;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Custom Chat Button */
+    #chatBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0f62fe;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #chatBtn:hover {
+      background: #0353e9;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Customer Support</h1>
+</header>
+
+<main>
+  <h2>Need Help?</h2>
+  <p>Click the button below to start chatting.</p>
+</main>
+
+<button id="chatBtn">💬 Chat with us</button>
+
+<script>
+  let chatLoaded = false;
+
+  document.getElementById("chatBtn").addEventListener("click", function () {
+
+    if (!chatLoaded) {
+      window.watsonAssistantChatOptions = {
+        integrationID: "c8b73f5c-343e-46ab-924a-a2d87401dd0d",
+        region: "au-syd",
+        serviceInstanceID: "2ceaf244-5d6d-45e5-9264-de8718b01bfd",
+        onLoad: async (instance) => {
+          await instance.render();
+          instance.openWindow(); // auto-open chat
+        }
+      };
+
+      const script = document.createElement("script");
+      script.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/latest/WatsonAssistantChatEntry.js";
+      document.head.appendChild(script);
+
+      chatLoaded = true;
+    }
+  });
+</script>
+
+</body>
+</html>
