@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AutoIntel</title>
+  <title>Car AI Assistant</title>
 
   <style>
     * {
@@ -15,73 +15,77 @@
     body {
       height: 100vh;
       background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') no-repeat center center/cover;
-      position: relative;
-      color: white;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Dark overlay */
     body::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.6);
+      top: 0;
+      left: 0;
       z-index: 0;
     }
 
     header {
       position: relative;
       z-index: 1;
-      text-align: center;
-      padding: 20px;
+      padding: 20px 50px;
       font-size: 28px;
       font-weight: bold;
-      letter-spacing: 1px;
+      color: white;
     }
 
-    main {
+    .hero {
       position: relative;
       z-index: 1;
-      height: calc(100vh - 80px);
+      flex: 1;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-    }
-
-    main h2 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    main p {
-      font-size: 18px;
-      margin-bottom: 20px;
-      opacity: 0.9;
-    }
-
-    /* Chat Button */
-    #chatBtn {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: linear-gradient(135deg, #0f62fe, #0353e9);
+      justify-content: center;
+      text-align: center;
       color: white;
-      border: none;
-      padding: 15px 22px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      transition: 0.3s ease;
-      z-index: 2;
+      flex-direction: column;
+      padding: 20px;
     }
 
-    #chatBtn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    .hero h1 {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 22px;
+      margin-bottom: 30px;
+      color: #ddd;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      background: #0f62fe;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #0043ce;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 15px;
+      color: #ccc;
+      background: rgba(0,0,0,0.5);
     }
   </style>
 </head>
@@ -89,38 +93,36 @@
 <body>
 
 <header>
-  AutoIntel
+  🚗 Car AI Assistant
 </header>
 
-<main>
-  <h2>Smart Vehicle Assistance</h2>
-  <p>Get instant help, vehicle insights, and support.</p>
-</main>
+<div class="hero">
+  <h1>Find Your Perfect Car</h1>
+  <p>Compare vehicles, explore features, and get real-time insights instantly.</p>
+  <button class="btn" onclick="alert('Use the chat icon on bottom right!')">
+    Start Exploring
+  </button>
+</div>
 
-<button id="chatBtn">💬 Chat with us</button>
+<footer>
+  Powered by IBM Watson Assistant
+</footer>
 
+<!-- Watson Assistant -->
 <script>
-  let chatLoaded = false;
-
-  document.getElementById("chatBtn").addEventListener("click", function () {
-
-    if (!chatLoaded) {
-      window.watsonAssistantChatOptions = {
-        integrationID: "c8b73f5c-343e-46ab-924a-a2d87401dd0d",
-        region: "au-syd",
-        serviceInstanceID: "2ceaf244-5d6d-45e5-9264-de8718b01bfd",
-        onLoad: async (instance) => {
-          await instance.render();
-          instance.openWindow();
-        }
-      };
-
-      const script = document.createElement("script");
-      script.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/latest/WatsonAssistantChatEntry.js";
-      document.head.appendChild(script);
-
-      chatLoaded = true;
+  window.watsonAssistantChatOptions = {
+    integrationID: "c8b73f5c-343e-46ab-924a-a2d87401dd0d",
+    region: "au-syd",
+    serviceInstanceID: "2ceaf244-5d6d-45e5-9264-de8718b01bfd",
+    onLoad: async (instance) => {
+      await instance.render();
     }
+  };
+
+  setTimeout(function () {
+    const t = document.createElement('script');
+    t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/latest/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
   });
 </script>
 
